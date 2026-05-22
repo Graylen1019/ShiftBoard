@@ -1,4 +1,6 @@
 import {
+  BellIcon,
+  Calendar1,
   Clipboard,
   Menu,
   PaperclipIcon,
@@ -19,16 +21,29 @@ export const Navbar = () => {
   return (
     <>
       {/* 1. TOP NAVBAR - High elevation layer with an aggressive custom dark drop shadow */}
-      <nav className="bg-panel-bg h-16 shadow-[0_8px_24px_rgba(0,0,0,0.7)] fixed top-0 left-0 right-0 z-30 flex items-center px-4 gap-4">
-        {/* Toggle Button */}
-        <Button variant={"ghost"} onClick={toggleMenu} asChild>
-          <Menu size={48} />
-        </Button>
+      <nav className="bg-panel-bg h-16 shadow-[0_8px_24px_rgba(0,0,0,0.7)] fixed top-0 left-0 right-0 z-30 flex items-center pl-4 pr-10 justify-between">
+        <div className="flex items-center gap-x-6">
+          {/* Toggle Button */}
+          <Button variant={"ghost"} onClick={toggleMenu} asChild>
+            <Menu className="size-18"/>
+          </Button>
 
-        {/* Branding/Logo */}
-        <div className="flex items-center gap-2 select-none">
-          <div className="w-6 h-6 bg-blue-500 rounded-sm"></div>
-          <span className="text-white font-bold text-lg">ShiftBoard</span>
+          {/* Branding/Logo */}
+          <div className="flex items-center gap-2 select-none">
+            <div className="w-6 h-6 bg-blue-500 rounded-sm"></div>
+            <div className="text-white font-bold text-lg">ShiftBoard</div>
+          </div>
+        </div>
+        {/* notifications and 7 day graph */}
+        <div className="flex text-center items-center justify-center gap-x-6">
+          <div className="w-full">
+            <BellIcon className="size-6" />
+          </div>
+          <div className="flex items-center gap-3">
+            {/* this will be a percentage of tasks done in past 7 days */}
+            <Calendar1 className="size-7" />
+            <div>70%</div>
+          </div>
         </div>
       </nav>
 
@@ -50,7 +65,7 @@ export const Navbar = () => {
             variant={"secondary"}
             className="text-left justify-start flex items-center "
           >
-            <a className="flex gap-x-2" href="/">
+            <a className="flex gap-x-2" href="">
               <ZoomInIcon size={24} className="size-5" />
               <div className="text-md">Overview</div>
             </a>
