@@ -65,7 +65,7 @@ export const Navbar = () => {
             variant={"secondary"}
             className="text-left justify-start flex items-center "
           >
-            <a className="flex gap-x-2" href="">
+            <a className="flex gap-x-2" href="/overview">
               <ZoomInIcon size={24} className="size-5" />
               <div className="text-md">Overview</div>
             </a>
@@ -102,11 +102,10 @@ export const Navbar = () => {
           </Button>
         </div>
         {/* Sign out/settings */}
-        <div className="flex gap-2 py-6">
+        <div className="flex items-center gap-2 py-6 text-xl">
           {/* TODO: */}
-          <div>PFP</div>
-          <div>NAME ID</div>
-          <Button asChild variant={"ghost"} className="ml-19">
+          <div className="text-sm">Bigelow, Graylen <span className="text-xs">(ea888888)</span></div>
+          <Button asChild variant={"ghost"} className="ml-6">
             <a href="/settings">
               <Settings2Icon className="size-6" />
             </a>
