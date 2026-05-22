@@ -17,11 +17,14 @@ Tech stack
     Auth:
     Clerk.js
 
-    Database
-    MongoDB for database
+    Database:
+    MongoDB via Mongoose
+
+    AI:
+    OpenAI API
 
 (Cloud)
-Hoping to experiment with AWS
+Hoping to experiment with AWS S3
 
-(AI)
-Hoping to Leverage OpenAI Api
+(Testing)
+Jest + Supertest w/ CI/CD github actions

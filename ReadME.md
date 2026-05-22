@@ -1,8 +1,5 @@
-Project Recommendation: ShiftBoard (MERN + AWS Edition)
+ShiftBoard (MERN + AWS Edition)
 Graylen Bigelow | Frontend Engineer | May 2026
-
-Why This Project
-Your background before tech is food service management. You spent three years working at the operational level inside a quick-service restaurant chain: managing inventory, tracking food cost targets, monitoring waste, running team schedules, and dealing with the real consequences of process failures. You were the floor manager, not the head office analyst or the supply chain planner. That distinction matters for how this project is scoped.
 
 The problem that exists at the floor manager level is operational visibility and closing fatigue. Every shift involves tracking tasks, logging waste, checking temperatures, and recording what went wrong. Most of this is done on paper or in disconnected spreadsheets, usually at 11:00 PM when a manager is exhausted. Enterprise restaurant management systems are franchise-mandated and read-only to individual managers. Generic task apps have no concept of shift structure, food-service compliance, or kitchen realities.
 
@@ -45,10 +42,6 @@ Testing: Jest + supertest. Closes your primary testing gap. Focuses heavily on b
 CI/CD: GitHub Actions executing your Jest testing suite on every push.
 
 Deployment: Frontend hosted on Vercel/Netlify; backend Express engine running via cloud provider (Render/Railway), and database hosted via MongoDB Atlas.
-
-How It Closes Your Skill Gaps
-Jest and Integration Testing
-The data-mapping layer is a fantastic testing canvas. You will write 12–15 focused tests using Jest and supertest covering:
 
 Route guards ensuring invalid shift structures return proper error codes (400 Bad Request).
 
