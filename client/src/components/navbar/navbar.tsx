@@ -21,11 +21,11 @@ export const Navbar = () => {
   return (
     <>
       {/* 1. TOP NAVBAR - High elevation layer with an aggressive custom dark drop shadow */}
-      <nav className="bg-panel-bg h-16 shadow-[0_8px_24px_rgba(0,0,0,0.7)] fixed top-0 left-0 right-0 z-30 flex items-center pl-4 pr-10 justify-between">
+      <nav className="bg-panel-bg h-16 shadow-[0_8px_24px_rgba(0,0,0,0.7)] fixed top-0 left-0 right-0 z-30 flex items-center pl-1 pr-10 justify-between">
         <div className="flex items-center gap-x-6">
           {/* Toggle Button */}
           <Button variant={"ghost"} onClick={toggleMenu} asChild>
-            <Menu className="size-18"/>
+            <Menu className="size-12"/>
           </Button>
 
           {/* Branding/Logo */}
