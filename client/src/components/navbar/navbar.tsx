@@ -8,7 +8,7 @@ interface NavbarProps {
 
 export const Navbar = ({ toggleMenu }: NavbarProps) => {
   return (
-    <nav className="bg-panel-bg h-16 shadow-[0_8px_24px_rgba(0,0,0,0.7)] fixed top-0 left-0 right-0 z-30 flex items-center px-4 gap-4">
+    <nav className="bg-panel-bg h-16 shadow-[0_8px_24px_rgba(0,0,0,0.7)] fixed top-0 left-0 right-0 z-30 flex items-center px-4 gap-4 border-2 border-border-color">
       <Button
         variant="ghost"
         onClick={toggleMenu}

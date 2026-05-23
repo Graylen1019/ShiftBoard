@@ -10,7 +10,7 @@ interface SidebarProps {
 export const Sidebar = ({ isOpen }: SidebarProps) => {
   return (
     <aside
-      className={`h-full bg-panel-bg border-r border-[#2d2d2d] transition-all duration-300 ease-in-out overflow-y-auto flex flex-col shrink-0
+      className={`h-full bg-panel-bg border-r-2 border-border-color transition-all duration-300 ease-in-out overflow-y-auto flex flex-col shrink-0
         ${isOpen ? "w-67.5 px-4 pb-2 pt-8 opacity-100" : "w-0 p-0 opacity-0 pointer-events-none border-none"}
       `}
     >

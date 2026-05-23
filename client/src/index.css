@@ -6,9 +6,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* Use the exact namespace prefixes so v4 registers them for autocomplete */
-  --color-gradient-start: #09090b; 
-  --color-gradient-end: #0f172a; 
+  --color-gradient-start: #050505; /* True Dark */
+  --color-gradient-end: #0f0f11;   /* Cold Onyx */
   --color-text-main: #f8fafc; 
   --color-panel-bg: rgba(24, 24, 27, 1); 
   --color-border-color: rgba(39, 39, 42, 0.5);
@@ -18,7 +17,8 @@
 html, body {
   margin: 0;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter Variable', sans-serif;
+  /* Use theme variables smoothly */
   background-image: linear-gradient(to bottom right, var(--color-gradient-start), var(--color-gradient-end));
   background-attachment: fixed;
   color: var(--color-text-main);
@@ -144,7 +144,8 @@ html, body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    /* REMOVED @apply bg-background to protect custom linear gradient rules */
+    @apply text-foreground;
   }
   html {
     @apply font-sans;

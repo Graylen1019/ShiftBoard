@@ -12,7 +12,7 @@ export const RootLayout = () => {
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden flex flex-col bg-[#141414]">
+    <div className="h-screen w-screen overflow-hidden flex flex-col">
       {/* 1. Top Bar stays completely isolated up top */}
       <Navbar toggleMenu={toggleMenu} />
       
