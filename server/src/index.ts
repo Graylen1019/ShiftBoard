@@ -9,6 +9,16 @@ const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 
+import shiftRoutes from './routes/shift-routes';
+import taskRoutes from './routes/task-routes';
+import wasteEntryRoutes from './routes/wasteEntry-routes';
+import aiRoutes from './routes/ai-routes';
+
+app.use('/api/shifts', shiftRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/waste', wasteEntryRoutes);
+app.use('/api/ai', aiRoutes);
+
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");
 });

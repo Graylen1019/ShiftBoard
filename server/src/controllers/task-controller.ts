@@ -16,7 +16,7 @@ export const getTasksByShift = async (
   }
 };
 
-export const updateTaskStatus = async (
+export const updateTask = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
