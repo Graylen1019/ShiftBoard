@@ -3,8 +3,8 @@ import { generateShiftSummary, analyzeWasteTrends, suggestTasks } from '../contr
 
 const router = Router();
 
+router.post('/suggest-tasks', suggestTasks);
 router.get('/summarize/:shiftId', generateShiftSummary);
 router.get('/waste-trends', analyzeWasteTrends);
-router.post('/suggest-tasks', suggestTasks);
 
 export default router;

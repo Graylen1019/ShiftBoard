@@ -5,7 +5,7 @@ import Task from "../models/task";
 import WasteEntry from "../models/waste-entry";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
 
 export const generateShiftSummary = async (
   req: Request,
@@ -84,6 +84,9 @@ export const analyzeWasteTrends = async (
 
 
 export const suggestTasks = async (req: Request, res: Response): Promise<void> => {
+
+  console.log('suggestTasks hit', req.body);
+
   try {
     const { shiftType } = req.body;
 
