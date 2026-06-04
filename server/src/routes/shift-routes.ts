@@ -11,6 +11,6 @@ const router = Router();
 router.get('/', getShifts);
 router.get('/:id', getShiftById);
 router.post('/', openShift);
-router.post('/:id/close', closeShift);
+router.patch('/:id/close', closeShift);
 
 export default router;

@@ -63,7 +63,7 @@ export const openShift = async (
 
     res
       .status(201)
-      .json({ message: "Shift opened successfully", shiftId: shift._id });
+      .json({ message: "Shift opened successfully", shift });
   } catch (error) {
     res.status(500).json({ message: "Failed to open shift", error });
   }
@@ -84,7 +84,7 @@ export const closeShift = async (
         foodCostVariance,
         endTime: new Date(),
       },
-      { new: true },
+      { returnDocument: "after" },
     );
 
     if (!shift) {

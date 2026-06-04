@@ -10,7 +10,7 @@ export const addWasteEntry = async (
     const { category, item, quantity, unit, note } = req.body;
 
     if (quantity <= 0) {
-      res.status(400).json({ message: "quantity must be greater then zero!" });
+      res.status(400).json({ message: "Quantity must be greater than zero" });
       return;
     }
 
@@ -62,7 +62,7 @@ export const deleteWasteEntry = async (
       return;
     }
 
-    res.status(200).json({ message: "Waste entry deleted successfully" });
+    res.status(200).json({ message: "Waste entry deleted" });
   } catch (error) {
     res.status(500).json({ message: "Failed to delete waste entry", error });
   }

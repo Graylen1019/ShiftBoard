@@ -38,7 +38,7 @@ export const updateTask = async (
         skipReason: skipReason || undefined,
         completedAt: status === "complete" ? new Date() : undefined,
       },
-      { new: true },
+      { returnDocument: "after" },
     );
 
     if (!task) {
