@@ -4,7 +4,7 @@ import {
   calculateWasteTotalsByCategory,
   calculateTotalWaste,
   getFlaggedTasks
-} from '../utils/reportUtils';
+} from '../utils/reportUtils'
 
 const mockTasks: any[] = [
   { status: 'completed', category: 'opening', description: 'Task 1' },

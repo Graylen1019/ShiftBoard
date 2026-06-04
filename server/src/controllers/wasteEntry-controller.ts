@@ -58,7 +58,7 @@ export const deleteWasteEntry = async (
     const entry = await WasteEntry.findByIdAndDelete(id);
 
     if (!entry) {
-      res.status(404).json({ message: "Waste entry not found" });
+      res.status(404).json({ message: "Waste entry not found" })
       return;
     }
 

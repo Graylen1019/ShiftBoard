@@ -75,7 +75,7 @@ export const closeShift = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const { foodCostVariance } = req.body;
+    const { foodCostVariance } = req.body
 
     const shift = await Shift.findByIdAndUpdate(
       id,

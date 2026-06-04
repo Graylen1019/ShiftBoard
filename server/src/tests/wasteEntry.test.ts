@@ -37,7 +37,7 @@ describe('Waste Entry Endpoints', () => {
         note: 'overcooked during rush',
       });
 
-    expect(res.status).toBe(201);
+    expect(res.status).toBe(201)
     expect(res.body.entry).toHaveProperty('_id');
     expect(res.body.entry.item).toBe('burger patties');
     expect(res.body.entry.quantity).toBe(5);

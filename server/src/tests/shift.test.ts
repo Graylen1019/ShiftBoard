@@ -66,7 +66,7 @@ describe("Shift Endpoints", () => {
 
     expect(res.status).toBe(200);
     expect(res.body.shift.status).toBe("closed");
-    expect(res.body.shift.foodCostVariance).toBe(150);
+    expect(res.body.shift.foodCostVariance).toBe(150)
   });
 
   it("should return 404 for a non existent shift", async () => {

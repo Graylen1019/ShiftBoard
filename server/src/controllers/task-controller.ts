@@ -48,6 +48,6 @@ export const updateTask = async (
 
     res.status(200).json({ task });
   } catch (error) {
-    res.status(500).json({ message: "Failed to update task", error });
+    res.status(500).json({ message: "Failed to update task", error })
   }
 };
