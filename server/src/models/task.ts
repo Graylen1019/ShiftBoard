@@ -7,7 +7,7 @@ export interface ITask extends Document {
   status:
     | "pending action"
     | "in progress"
-    | "completed"
+    | "complete"
     | "skipped"
     | "flagged";
   skipReason?: string;
@@ -27,7 +27,7 @@ const TaskSchema: Schema = new Schema({
     enum: [
         "pending action",
         "in progress",
-        "completed",
+        "complete",
         "skipped",
         "flagged"
     ],

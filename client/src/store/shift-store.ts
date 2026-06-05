@@ -15,7 +15,7 @@ interface Task {
   shift: string;
   category: 'opening' | 'mid-shift' | 'temperature checks' | 'closing';
   description: string;
-  status: 'pending' | 'complete' | 'skipped' | 'flagged';
+  status: 'pending action' | 'complete' | 'skipped' | 'flagged';
   skipReason?: string;
   completedAt?: string;
 }

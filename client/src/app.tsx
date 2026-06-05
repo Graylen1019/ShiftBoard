@@ -1,46 +1,33 @@
-// src/App.tsx
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Overview } from "./pages/overview";
-import { Tasks } from "./pages/tasks";
-import { RootLayout } from "./layouts/root-layout";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Overview } from './pages/overview';
+import { Tasks } from './pages/tasks';
+import { RootLayout } from './layouts/root-layout';
+import { OpenShiftModal } from './components/shift/open-shift-modal';
+import { useShiftStore } from './store/shift-store';
+import { Waste } from './pages/waste';
+import { Report } from './pages/report';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <RootLayout />, // All children components render cleanly inside this shell
+    path: '/',
+    element: <RootLayout />,
     children: [
-      {
-        index: true,
-        element: <Overview />,
-      },
-      {
-        path: "overview",
-        element: <Overview />,
-      },
-      {
-        path: "tasks",
-        element: <Tasks />,
-      },
-      {
-        path: "waste",
-        element: <div className="p-6">Waste Management</div>,
-      },
-      {
-        path: "reports",
-        element: <div className="p-6">Reports Panel</div>,
-      },
-      {
-        path: "settings",
-        element: <div className="p-6">Settings Panel</div>,
-      },
+      { index: true, element: <Overview /> },
+      { path: 'overview', element: <Overview /> },
+      { path: 'tasks', element: <Tasks /> },
+      { path: 'waste', element: <Waste /> },
+      { path: 'reports', element: <Report /> },
+      { path: 'settings', element: <div className="p-6">Settings Panel</div> },
     ],
-  },
-  {
-    path: "/login",
-    element: <div className="h-screen w-screen flex items-center justify-center bg-[#141414] text-white">Login Page</div>,
   },
 ]);
 
 export default function App() {
+  const { currentShift } = useShiftStore();
+
+  if (!currentShift) {
+    return <OpenShiftModal />;
+  }
+
   return <RouterProvider router={router} />;
 }

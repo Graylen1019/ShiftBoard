@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import shiftRoutes from './routes/shift-routes';
 import taskRoutes from './routes/task-routes';
@@ -10,6 +11,11 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+}));
 
 app.use('/api/shifts', shiftRoutes);
 app.use('/api/tasks', taskRoutes);

@@ -4,8 +4,10 @@ import Shift from "../models/shift";
 import Task from "../models/task";
 import WasteEntry from "../models/waste-entry";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
-const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
+const getModel = () => {
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
+  return genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
+};
 
 export const generateShiftSummary = async (
   req: Request,
@@ -23,7 +25,7 @@ export const generateShiftSummary = async (
       return;
     }
 
-    const completedTasks = tasks.filter((t) => t.status === "completed").length;
+    const completedTasks = tasks.filter((t) => t.status === "complete").length;
     const skippedTasks = tasks.filter((t) => t.status === "skipped").length;
     const flaggedTasks = tasks.filter((t) => t.status === "flagged").length;
     const totalWaste = wasteEntries.reduce((sum, e) => sum + e.quantity, 0);
@@ -40,14 +42,12 @@ export const generateShiftSummary = async (
       Waste Entries: ${wasteEntries.map((e) => `${e.quantity} ${e.unit} of ${e.item} (${e.category})`).join(", ")}
     `;
 
-    const result = await model.generateContent(prompt);
+    const result = await getModel().generateContent(prompt);
     const summary = result.response.text();
-
     res.status(200).json({ summary });
+
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to generate shift summary", error });
+    res.status(500).json({ message: "Failed to generate shift summary", error });
   }
 };
 
@@ -73,20 +73,19 @@ export const analyzeWasteTrends = async (
       Keep your response concise and practical for a shift manager.
     `;
 
-    const result = await model.generateContent(prompt);
+    const result = await getModel().generateContent(prompt);
     const analysis = result.response.text();
-
     res.status(200).json({ analysis });
+
   } catch (error) {
     res.status(500).json({ message: "Failed to analyze waste trends", error });
   }
 };
 
-
-export const suggestTasks = async (req: Request, res: Response): Promise<void> => {
-
-  console.log('suggestTasks hit', req.body);
-
+export const suggestTasks = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
     const { shiftType } = req.body;
 
@@ -97,13 +96,13 @@ export const suggestTasks = async (req: Request, res: Response): Promise<void> =
       [{ "category": "opening" | "mid-shift" | "temperature checks" | "closing", "description": "task description" }]
     `;
 
-    const result = await model.generateContent(prompt);
+    const result = await getModel().generateContent(prompt);
     const text = result.response.text();
-    const clean = text.replace(/```json|```/g, '').trim();
+    const clean = text.replace(/```json|```/g, "").trim();
     const tasks = JSON.parse(clean);
-
     res.status(200).json({ tasks });
+
   } catch (error) {
-    res.status(500).json({ message: 'Failed to suggest tasks', error });
+    res.status(500).json({ message: "Failed to suggest tasks", error });
   }
 };

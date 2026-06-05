@@ -1,54 +1,73 @@
-// src/components/sidebar/sidebar.tsx
-import { Clipboard, RecycleIcon, Settings2Icon } from "lucide-react";
+import { Clipboard, RecycleIcon, Settings2Icon, LayoutDashboard, FileText } from "lucide-react";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useShiftStore } from "@/store/shift-store";
 
 interface SidebarProps {
   isOpen: boolean;
 }
 
 export const Sidebar = ({ isOpen }: SidebarProps) => {
+  const location = useLocation();
+  const { currentShift } = useShiftStore();
+
+  const navItems = [
+    { to: "/overview", label: "Overview", icon: <LayoutDashboard className="h-4 w-4" /> },
+    { to: "/tasks", label: "Tasks", icon: <Clipboard className="h-4 w-4" /> },
+    { to: "/waste", label: "Waste Log", icon: <RecycleIcon className="h-4 w-4" /> },
+    { to: "/reports", label: "Shift Report", icon: <FileText className="h-4 w-4" /> },
+  ];
+
   return (
     <aside
-      className={`h-full bg-panel-bg border-r-2 border-border-color transition-all duration-300 ease-in-out overflow-y-auto flex flex-col shrink-0
-        ${isOpen ? "w-67.5 px-4 pb-2 pt-8 opacity-100" : "w-0 p-0 opacity-0 pointer-events-none border-none"}
+      className={`h-full bg-panel-bg border-r border-border-color transition-all duration-300 ease-in-out overflow-y-auto flex flex-col shrink-0
+        ${isOpen ? "w-64 px-4 pb-2 pt-8 opacity-100" : "w-0 p-0 opacity-0 pointer-events-none border-none"}
       `}
     >
-      {/* User Info Block */}
-      <div className="text-text-main text-md border-b border-[#2d2d2d] pb-4 whitespace-nowrap">
-        Welcome, "Logged in user"
+      <div className="flex flex-col gap-1 pb-4 border-b border-border-color whitespace-nowrap">
+        <p className="text-xs text-muted-foreground uppercase tracking-widest">Active Shift</p>
+        <p className="text-text-main text-sm font-medium">{currentShift?.managerName ?? '—'}</p>
+        <p className="text-xs text-muted-foreground">
+          {currentShift?.startTime ? new Date(currentShift.startTime).toLocaleTimeString() : '—'}
+        </p>
       </div>
 
-      {/* Tabs list */}
-      <div className="text-md mt-6 flex flex-col gap-y-3 flex-1">
-        <Button variant="ghost" className="text-left justify-start w-full text-text-main hover:bg-[#2d2d2d]" asChild>
-          <Link className="flex gap-x-2 items-center" to="/overview">
-            <span>Overview</span>
-          </Link>
-        </Button>
-        <Button variant="ghost" className="text-left justify-start w-full text-text-main hover:bg-[#2d2d2d]" asChild>
-          <Link className="flex gap-x-2 items-center" to="/tasks">
-            <Clipboard className="h-5 w-5" />
-            <span>Tasks</span>
-          </Link>
-        </Button>
-        <Button variant="ghost" className="text-left justify-start w-full text-text-main hover:bg-[#2d2d2d]" asChild>
-          <Link className="flex gap-x-2 items-center" to="/waste">
-            <RecycleIcon className="h-5 w-5" />
-            <span>Waste</span>
-          </Link>
-        </Button>
+      <div className="mt-6 flex flex-col gap-y-1 flex-1">
+        {navItems.map(({ to, label, icon }) => {
+          const isActive = location.pathname === to;
+          return (
+            <Button
+              key={to}
+              variant="ghost"
+              className={`justify-start w-full gap-x-3 rounded-xl text-sm transition-all
+                ${isActive
+                  ? 'bg-[var(--color-border-color)] text-text-main font-medium'
+                  : 'text-muted-foreground hover:text-text-main hover:bg-[var(--color-border-color)]'
+                }`}
+              asChild
+            >
+              <Link to={to} className="flex items-center gap-x-3">
+                {icon}
+                <span>{label}</span>
+              </Link>
+            </Button>
+          );
+        })}
       </div>
 
-      {/* Footer Profile Block */}
-      <div className="flex items-center justify-between py-4 mt-auto border-t border-[#2d2d2d] whitespace-nowrap">
+      <div className="flex items-center justify-between py-4 mt-auto border-t border-border-color whitespace-nowrap">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center text-xs text-white">PFP</div>
-          <div className="text-sm text-text-main font-medium">NAME ID</div>
+          <div className="w-8 h-8 rounded-full bg-border-color flex items-center justify-center text-xs text-text-main font-medium">
+            {currentShift?.managerName?.charAt(0).toUpperCase() ?? '?'}
+          </div>
+          <div className="flex flex-col">
+            <p className="text-sm text-text-main font-medium leading-tight">{currentShift?.managerName ?? 'Manager'}</p>
+            <p className="text-xs text-muted-foreground leading-tight">On shift</p>
+          </div>
         </div>
-        <Button variant="ghost" className="h-9 w-9 p-0 text-text-main hover:bg-[#2d2d2d]" asChild>
+        <Button variant="ghost" className="h-9 w-9 p-0 text-muted-foreground hover:text-text-main" asChild>
           <Link to="/settings" className="flex items-center justify-center">
-            <Settings2Icon className="h-5 w-5" />
+            <Settings2Icon className="h-4 w-4" />
           </Link>
         </Button>
       </div>
