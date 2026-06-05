@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useShiftStore } from "@/store/shift-store";
 import * as api from "@/services/api";
+import { generateGreeting } from "@/services/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -10,7 +11,7 @@ export const OpenShiftModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { setCurrentShift, setTasks } = useShiftStore();
+  const { setCurrentShift, setTasks, setGreeting } = useShiftStore();
 
   const handleOpenShift = async () => {
     if (!managerName.trim()) {
@@ -27,7 +28,13 @@ export const OpenShiftModal = () => {
 
       const tasksRes = await api.getTasksByShift(shift._id);
       const tasks = tasksRes.data.tasks;
-        console.log('tasks:', tasks)
+
+      const hour = new Date().getHours();
+      const timeOfDay = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
+
+      const greetingRes = await generateGreeting(managerName, tasks.length, timeOfDay);
+      setGreeting(greetingRes.data.greeting);
+
       setCurrentShift(shift);
       setTasks(tasks);
     } catch {
@@ -67,11 +74,11 @@ export const OpenShiftModal = () => {
           )}
 
           <Button
-          onClick={handleOpenShift}
-          disabled={isLoading}
-          className="w-full rounded-2xl py-2.5 mt-2 hover:cursor-pointer"
+            onClick={handleOpenShift}
+            disabled={isLoading}
+            className="w-full rounded-2xl py-2.5 mt-2 hover:cursor-pointer"
           >
-            {isLoading ? 'Opening Shift..' : 'Open Shift'}
+            {isLoading ? 'Opening Shift...' : 'Open Shift'}
           </Button>
         </div>
       </div>

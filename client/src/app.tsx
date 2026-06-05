@@ -1,23 +1,25 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Overview } from './pages/overview';
-import { Tasks } from './pages/tasks';
-import { RootLayout } from './layouts/root-layout';
-import { OpenShiftModal } from './components/shift/open-shift-modal';
-import { useShiftStore } from './store/shift-store';
-import { Waste } from './pages/waste';
-import { Report } from './pages/report';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { RootLayout } from "./layouts/root-layout";
+import { OpenShiftModal } from "./modules/overview/ui/components/open-shift-modal";
+import { useShiftStore } from "./store/shift-store";
+
+import { OverviewView } from "./modules/overview/ui/views/overview-view";
+import { TasksView } from "./modules/tasks/ui/views/tasks-view";
+import { WasteView } from "./modules/waste/ui/views/waste-view";
+import { ReportView } from "./modules/report/ui/views/report-view";
+import { SettingsView } from './modules/settings/ui/views/settings-view';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <RootLayout />,
     children: [
-      { index: true, element: <Overview /> },
-      { path: 'overview', element: <Overview /> },
-      { path: 'tasks', element: <Tasks /> },
-      { path: 'waste', element: <Waste /> },
-      { path: 'reports', element: <Report /> },
-      { path: 'settings', element: <div className="p-6">Settings Panel</div> },
+      { index: true, element: <OverviewView /> },
+      { path: "overview", element: <OverviewView /> },
+      { path: "tasks", element: <TasksView /> },
+      { path: "waste", element: <WasteView /> },
+      { path: "reports", element: <ReportView /> },
+      { path: 'settings', element: <SettingsView /> },
     ],
   },
 ]);

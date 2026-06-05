@@ -10,17 +10,22 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.json());
-
 app.use(cors({
   origin: 'http://localhost:5173',
   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 }));
 
+app.use(express.json());
+
 app.use('/api/shifts', shiftRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/waste', wasteEntryRoutes);
 app.use('/api/ai', aiRoutes);
+
+app.post('/test', (req, res) => {
+  console.log('TEST ROUTE HIT');
+  res.json({ message: 'test works' });
+});
 
 app.get('/', (req: Request, res: Response) => {
   res.send('ShiftBoard API running');

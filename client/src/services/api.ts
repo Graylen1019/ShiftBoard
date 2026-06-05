@@ -47,3 +47,6 @@ export const analyzeWasteTrends = () => api.get("/ai/waste-trends");
 
 export const suggestTasks = (shiftType: string) =>
   api.post("/ai/suggest-tasks", { shiftType });
+
+export const generateGreeting = (managerName: string, taskCount: number, timeOfDay: string) =>
+  api.post('/ai/greeting', { managerName, taskCount, timeOfDay });

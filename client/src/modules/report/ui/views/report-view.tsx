@@ -1,20 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useShiftStore } from '@/store/shift-store';
-import { closeShift, summarizeShift } from '@/services/api';
+import { closeShift, summarizeShift, getTasksByShift, getWasteEntriesByShift } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { CheckCircle2, Flag, SkipForward, Clipboard } from 'lucide-react';
+import { ReportSkeleton } from '../components/report-skeleton';
 
-export const Report = () => {
-  const { currentShift, tasks, wasteEntries, setCurrentShift, clearShift } = useShiftStore();
-
+export const ReportView = () => {
+  const { currentShift, tasks, wasteEntries, setCurrentShift, setTasks, setWasteEntries, clearShift } = useShiftStore();
+  const [isLoading, setIsLoading] = useState(true);
   const [foodCostVariance, setFoodCostVariance] = useState('');
   const [aiSummary, setAiSummary] = useState<string | null>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [isLoadingSummary, setIsLoadingSummary] = useState(false);
   const [isClosed, setIsClosed] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (currentShift) {
+      Promise.all([
+        getTasksByShift(currentShift._id),
+        getWasteEntriesByShift(currentShift._id),
+      ]).then(([tasksRes, wasteRes]) => {
+        setTasks(tasksRes.data.tasks);
+        setWasteEntries(wasteRes.data.entries);
+      }).finally(() => setIsLoading(false));
+    }
+  }, [currentShift, setTasks, setWasteEntries]);
+
+  if (isLoading) return <ReportSkeleton />;
 
   const completedTasks = tasks.filter((t) => t.status === 'complete').length;
   const skippedTasks = tasks.filter((t) => t.status === 'skipped').length;
@@ -156,12 +171,7 @@ ${aiSummary ? `AI SUMMARY:\n${aiSummary}` : ''}
           ) : (
             <p className="text-sm text-muted-foreground">No summary generated yet.</p>
           )}
-          <Button
-            onClick={handleGetSummary}
-            disabled={isLoadingSummary}
-            variant="outline"
-            className="rounded-xl"
-          >
+          <Button onClick={handleGetSummary} disabled={isLoadingSummary} variant="outline" className="rounded-xl">
             {isLoadingSummary ? 'Generating...' : 'Generate AI Summary'}
           </Button>
         </CardContent>
@@ -181,12 +191,7 @@ ${aiSummary ? `AI SUMMARY:\n${aiSummary}` : ''}
               />
             </div>
             {error && <p className="text-destructive text-sm">{error}</p>}
-            <Button
-              onClick={handleCloseShift}
-              disabled={isClosing}
-              variant="destructive"
-              className="rounded-xl"
-            >
+            <Button onClick={handleCloseShift} disabled={isClosing} variant="destructive" className="rounded-xl">
               {isClosing ? 'Closing Shift...' : 'Close Shift'}
             </Button>
           </CardContent>
@@ -196,17 +201,10 @@ ${aiSummary ? `AI SUMMARY:\n${aiSummary}` : ''}
           <CardContent className="pt-4 flex flex-col gap-4">
             <p className="text-text-main font-medium">Shift closed successfully.</p>
             <div className="flex gap-4">
-              <Button
-                onClick={handleCopyReport}
-                variant="outline"
-                className="rounded-xl gap-2"
-              >
+              <Button onClick={handleCopyReport} variant="outline" className="rounded-xl gap-2">
                 <Clipboard className="h-4 w-4" /> Copy Report
               </Button>
-              <Button
-                onClick={clearShift}
-                className="rounded-xl"
-              >
+              <Button onClick={clearShift} className="rounded-xl">
                 Start New Shift
               </Button>
             </div>

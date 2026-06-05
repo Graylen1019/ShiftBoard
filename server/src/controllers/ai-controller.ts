@@ -106,3 +106,28 @@ export const suggestTasks = async (
     res.status(500).json({ message: "Failed to suggest tasks", error });
   }
 };
+
+export const generateGreeting = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { managerName, taskCount, timeOfDay } = req.body;
+
+    const prompt = `
+      You are a friendly restaurant shift assistant. Generate a short, energetic, and personalized shift opening greeting for a manager.
+      
+      Manager name: ${managerName}
+      Time of day: ${timeOfDay}
+      Number of tasks ahead: ${taskCount}
+      
+      Keep it to 2 sentences max. Be encouraging and specific. Do not use generic phrases like "Let's get started". Make it feel human and warm.
+    `;
+
+    const result = await getModel().generateContent(prompt);
+    const greeting = result.response.text();
+    res.status(200).json({ greeting });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to generate greeting', error });
+  }
+};
