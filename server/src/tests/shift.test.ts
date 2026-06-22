@@ -60,13 +60,11 @@ describe("Shift Endpoints", () => {
   it("should close a shift", async () => {
     const res = await request(app)
       .patch(`/api/shifts/${shiftId}/close`)
-      .send({ foodCostVariance: 150 });
 
       console.log(res.body);
 
     expect(res.status).toBe(200);
     expect(res.body.shift.status).toBe("closed");
-    expect(res.body.shift.foodCostVariance).toBe(150)
   });
 
   it("should return 404 for a non existent shift", async () => {

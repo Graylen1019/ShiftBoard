@@ -7,7 +7,7 @@ export interface ITask extends Document {
   status:
     | "pending action"
     | "in progress"
-    | "complete"
+    | "completed"
     | "skipped"
     | "flagged";
   skipReason?: string;

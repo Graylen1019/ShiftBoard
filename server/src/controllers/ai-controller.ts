@@ -25,7 +25,7 @@ export const generateShiftSummary = async (
       return;
     }
 
-    const completedTasks = tasks.filter((t) => t.status === "complete").length;
+    const completedTasks = tasks.filter((t) => t.status === "completed").length;
     const skippedTasks = tasks.filter((t) => t.status === "skipped").length;
     const flaggedTasks = tasks.filter((t) => t.status === "flagged").length;
     const totalWaste = wasteEntries.reduce((sum, e) => sum + e.quantity, 0);
@@ -36,7 +36,6 @@ export const generateShiftSummary = async (
       Manager: ${shift.managerName}
       Date: ${shift.date}
       Duration: ${shift.startTime} to ${shift.endTime || "ongoing"}
-      Food Cost Variance: ${shift.foodCostVariance ?? "not entered"}
       Tasks: ${completedTasks} completed, ${skippedTasks} skipped, ${flaggedTasks} flagged out of ${tasks.length} total
       Total Waste Quantity: ${totalWaste}
       Waste Entries: ${wasteEntries.map((e) => `${e.quantity} ${e.unit} of ${e.item} (${e.category})`).join(", ")}

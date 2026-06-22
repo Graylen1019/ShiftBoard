@@ -7,8 +7,8 @@ const api = axios.create({
 export const openShift = (managerName: string, date: string) =>
   api.post("/shifts", { managerName, date });
 
-export const closeShift = (shiftId: string, foodCostVariance: number) =>
-  api.patch(`/shifts/${shiftId}/close`, { foodCostVariance });
+export const closeShift = (shiftId: string) =>
+  api.patch(`/shifts/${shiftId}/close`);
 
 export const getShifts = () => api.get("/shifts");
 
